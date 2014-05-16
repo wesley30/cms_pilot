@@ -1,0 +1,37 @@
+<div class="modal" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="$hide()">×</button>
+        <h4 class="modal-title" translate="">Move Device</h4>
+      </div>
+      <div class="modal-body">
+
+        <h4 translate="">Where do you want to move this device(s) to?</h4><br>
+            <script type="text/ng-template"  id="ContentTree_Move_Device_renderer.html">
+               <span class="btn" ng-click="MoveDevice(data.Node.ID)">
+               <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{data.Node.Name}}
+               </span>  
+               
+                <ul ng-show="data.Nodes">
+                    <li ng-repeat="data in data.Nodes" ng-include="'ContentTree_Move_Device_renderer.html'"></li>
+                </ul>
+          </script>
+    
+          <ul>
+          		<li>            
+               <span class="btn" ng-click="MoveDevice(0)">
+               <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<span translate="">Home Folder</span></span>
+          			<ul>
+                    <li ng-repeat="data in GlobalState.ContentTreeList" ng-include="'ContentTree_Move_Device_renderer.html'"></li>
+                </ul>
+             </li>
+          </ul>  
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="$hide()" translate="">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<hr>
+<div ng-controller="contenttree">
+    <script type="text/ng-template"  id="ContentTree_renderer.html">
+       <span class="btn" ng-class="data.Node.Selected" ng-click="SelectContentTree(data.Node.ID)">
+       <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{data.Node.Name}}
+       <span ng-show="data.Node.Selected" style="margin-left:30px;" class="glyphicon glyphicon-list" data-animation="am-flip-x" bs-dropdown="FolderMenu"></span>
+       </span>  
+       
+        <ul ng-show="data.Nodes">
+            <li ng-repeat="data in data.Nodes" ng-include="'ContentTree_renderer.html'"></li>
+        </ul>
+    </script>
+
+      <ul>
+      		<li>            
+           <span class="btn" ng-class="GlobalState.ContentTreeList.Selected" ng-click="SelectContentTree(0)">
+           <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<span translate="">Home</span> 
+           <span ng-show="GlobalState.ContentTreeList.Selected" style="margin-left:30px;" class="glyphicon glyphicon-list" data-animation="am-flip-x" bs-dropdown="FolderMenuHome"></span></span>
+      			<ul>
+                <li ng-repeat="data in GlobalState.ContentTreeList" ng-include="'ContentTree_renderer.html'"></li>
+            </ul>
+       </li>
+      </ul>  
+</div>

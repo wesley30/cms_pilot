@@ -1,0 +1,246 @@
+<div>
+   <!-- Playlist overview -->
+     <div ng-hide="EditPlaylistPage" style="margin-left: 15px;">
+       <a href="#/deviceview" class="btn btn-primary btn-lg" translate="">Back</a> <button style="float:right" ng-click="NewPlaylist()" class="btn btn-success btn-lg" translate="">New Playlist</button>
+        <hr />
+        <input type="text" ng-model="SearchValue" autofocus="" style="width: 400px;" placeholder="{{'Search'|translate}}" />
+        <br />
+        <br />
+        <table class="table table-striped">
+        <thead>
+              <tr>
+                <th translate="">Published</th>
+                <th translate="">Name</th>
+                <th translate="">Date from</th>
+                <th translate="">Date to</th>
+                <th translate="">Start time</th>
+                <th translate="">End time</th>
+                <th translate="">Days active</th>
+                <th></th>
+              </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="Playlist in Playlists | filter:SearchValue" ng-class="{GroupPlaylist: Playlist.GID!=0}">
+             <td><div ng-show="Playlist.Active" translate="">YES</div><div ng-hide="Playlist.Active" translate="">NO</div></td>
+             <td>{{ Playlist.Name }}</td>
+             <td><div ng-show="Playlist.DateActive">{{ UnixTimeToDate(Playlist.DateFrom) | date:'yyyy-MM-dd' }}</div></td>
+             <td><div ng-show="Playlist.DateActive">{{ UnixTimeToDate(Playlist.DateTo) | date:'yyyy-MM-dd' }}</div></td>
+             <td><div ng-show="Playlist.TimeActive">{{ Playlist.StartTime }}</div></td>
+             <td><div ng-show="Playlist.TimeActive">{{ Playlist.EndTime }}</div></td>
+             <td>
+               <div ng-show="Playlist.DayActive">
+                 <span class="btn btn-success btn-sm" ng-show="Playlist.Monday" translate="">Monday</span>
+                 <span class="btn btn-success btn-sm" ng-show="Playlist.Tuesday" translate="">Tuesday</span>
+                 <span class="btn btn-success btn-sm" ng-show="Playlist.Wednesday" translate="">Wednesday</span>
+                 <span class="btn btn-success btn-sm" ng-show="Playlist.Thursday" translate="">Thursday</span>
+                 <span class="btn btn-success btn-sm" ng-show="Playlist.Friday" translate="">Friday</span>
+                 <span class="btn btn-success btn-sm" ng-show="Playlist.Saturday" translate="">Saturday</span>
+                 <span class="btn btn-success btn-sm" ng-show="Playlist.Sunday" translate="">Sunday</span>
+               </div>
+             </td>
+             <td>
+               <span ng-show="PlaylistType==1">
+                     <button ng-hide="Playlist.GID==0" ng-click="UnLinkPlaylist(Playlist.GID)" class="btn btn-default" translate="">Unlink</button>
+                     <button ng-click="LinkPlaylist(Playlist.ID)" class="btn btn-default" translate="">Link</button>
+               </span>
+               
+               <button class="btn btn-primary" ng-click="LoadPlaylistInfo(Playlist.ID,Playlist.GID)" ><span class="glyphicon glyphicon-wrench"></span></button>
+               <button class="btn btn-danger"  ng-click="DeletePlaylist(Playlist.ID,Playlist.Name,Playlist.GID)" ><span class="glyphicon glyphicon-trash"></span></button>
+             </td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
+      <!-- edit playlist -->
+      <div ng-show="EditPlaylistPage" class="container-fluid">
+           <button ng-click="BackToOverview()" class="btn btn-primary btn-lg" translate="">Back</button>
+           <center>
+           <ul class="wizard">
+              <a ng-click="SelectStep(1)" ng-class="StepClass.Step1"><span class="badge">1</span> <span translate="">Name</span></a> <span class="divider">/</span>
+              <a ng-click="SelectStep(2)" ng-class="StepClass.Step2"><span class="badge">2</span> <span translate="">Date</span></a> <span class="divider">/</span>
+              <a ng-click="SelectStep(3)" ng-class="StepClass.Step3"><span class="badge">3</span> <span translate="">Time</span></a> <span class="divider">/</span>
+              <a ng-click="SelectStep(4)" ng-class="StepClass.Step4"><span class="badge">4</span> <span translate="">Days</span></a> <span class="divider">/</span>
+              <a ng-click="SelectStep(5)" ng-class="StepClass.Step5"><span class="badge badge-inverse">5</span> <span translate="">Content</span></a> <span class="divider">/</span>
+              <a ng-click="SelectStep(6)" ng-class="StepClass.Step6"><span class="badge">6</span> <span translate="">Done</span></a>
+          </ul>
+           </center>
+           <hr>
+           <div>    
+              <div ng-show="Step == 1">
+              <button ng-show="EditPlaylist.Name" class="btn btn-success" ng-click="SelectStep(2)" style="float:right;" translate="">Next</button>
+              <button ng-hide="EditPlaylist.Name" class="btn btn-default" ng-click="SelectStep(2)" style="float:right;" translate="">Next</button>
+              <h3 translate="">What is the name of your playlist?</h3>
+              <br>
+              <input type="text" style="width:200px;" autofocus="" placeholder="Playlist name" ng-model="EditPlaylist.Name" />
+              </div>
+              <div ng-show="Step == 2">
+                <button class="btn btn-success" ng-click="SelectStep(3)" style="float:right;" translate="">Next</button>
+                
+                <span class="btn boolean" ng-click="EditPlaylist.DateActive=!EditPlaylist.DateActive" ng-model="EditPlaylist.DateActive" style="position: absolute; margin-left: 329px; margin-top: 0px;">
+                    <span class="on btn-success" ng-show="EditPlaylist.DateActive" translate="">YES</span>
+                    <span class="off btn-default" ng-hide="EditPlaylist.DateActive" translate="">NO</span>  
+                </span> <h3 translate="">Do you want to set a date?</h3> 
+              <br>
+                <div ng-show="EditPlaylist.DateActive">
+                   <div class="form-group">
+                      <label class="control-label"> <span translate="">Date from / to</span> <small>dd-MM-yyyy</small></label><br>
+                      <div class="form-group">
+                        <b><span translate="">From:</span> </b><input type="text" class="form-control" data-date-format="dd-MM-yyyy"   ng-model="EditPlaylist.DateFrom" data-max-date="EditPlaylist.DateTo"  data-autoclose="1" placeholder="Date from" bs-datepicker="">
+                      </div>
+                      <div class="form-group">
+                        <b><span translate="">To:</span> </b>  <input type="text" class="form-control" data-date-format="dd-MM-yyyy"   ng-model="EditPlaylist.DateTo"   data-min-date="EditPlaylist.DateFrom"  data-autoclose="1" placeholder="Date to" bs-datepicker="">
+                      </div>
+                      
+                    </div>
+                </div>
+              </div>
+              <div ng-show="Step == 3">
+                <button class="btn btn-success" ng-click="SelectStep(4)" style="float:right;" translate="">Next</button>
+                <span class="btn boolean" ng-click="EditPlaylist.TimeActive=!EditPlaylist.TimeActive" ng-model="EditPlaylist.TimeActive" style="position: absolute; margin-left: 329px; margin-top: 0px">
+                      <span class="on btn-success" ng-show="EditPlaylist.TimeActive"  translate="">YES</span>
+                      <span class="off btn-default" ng-hide="EditPlaylist.TimeActive" translate="">NO</span>  
+                  </span> <h3 translate="">Do you want to set a time?</h3> 
+                <br>
+                  <div ng-show="EditPlaylist.TimeActive">
+                     <b translate="">Start Time: </b> <input type="text" class="form-control" size="5" ng-model="EditPlaylist.StartTime" data-time-format="HH:mm"  data-autoclose="1" name="time1" bs-timepicker=""><br>
+                     <b translate="">End Time: </b> <input type="text" class="form-control" size="5" ng-model="EditPlaylist.EndTime"   data-time-format="HH:mm"  data-autoclose="1" name="time2" bs-timepicker="">
+                  </div>
+              </div>
+              <div ng-show="Step == 4">
+                <button class="btn btn-success" ng-click="SelectStep(5)" style="float:right;" translate="">Next</button>
+                 <span class="btn boolean" ng-click="EditPlaylist.DayActive=!EditPlaylist.DayActive" ng-model="EditPlaylist.DayActive" style="position: absolute; margin-left: 329px; margin-top: 0px">
+                      <span class="on btn-success" ng-show="EditPlaylist.DayActive"  translate="">YES</span>
+                      <span class="off btn-default" ng-hide="EditPlaylist.DayActive" translate="">NO</span>  
+                  </span> <h3 translate="">Do you want to set a day?</h3> 
+                <br>
+                <div ng-show="EditPlaylist.DayActive">
+                    <span ng:class="{1:'btn-success', 0:'btn-default'}[EditPlaylist.Monday]"    class="btn" ng-click="EditPlaylist.Monday = { 1: 0, 0:1 }[EditPlaylist.Monday]" translate="">Monday</span>
+                    <span ng:class="{1:'btn-success', 0:'btn-default'}[EditPlaylist.Tuesday]"   class="btn" ng-click="EditPlaylist.Tuesday = { 1: 0, 0:1 }[EditPlaylist.Tuesday]" translate="">Tuesday</span>
+                    <span ng:class="{1:'btn-success', 0:'btn-default'}[EditPlaylist.Wednesday]" class="btn" ng-click="EditPlaylist.Wednesday = { 1: 0, 0:1 }[EditPlaylist.Wednesday]" translate="">Wednesday</span>
+                    <span ng:class="{1:'btn-success', 0:'btn-default'}[EditPlaylist.Thursday]"  class="btn" ng-click="EditPlaylist.Thursday = { 1: 0, 0:1 }[EditPlaylist.Thursday]" translate="">Thursday</span>
+                    <span ng:class="{1:'btn-success', 0:'btn-default'}[EditPlaylist.Friday]"    class="btn" ng-click="EditPlaylist.Friday = { 1: 0, 0:1 }[EditPlaylist.Friday]" translate="">Friday</span>
+                    <span ng:class="{1:'btn-success', 0:'btn-default'}[EditPlaylist.Saturday]"  class="btn" ng-click="EditPlaylist.Saturday = { 1: 0, 0:1 }[EditPlaylist.Saturday]" translate="">Saturday</span>
+                    <span ng:class="{1:'btn-success', 0:'btn-default'}[EditPlaylist.Sunday]"    class="btn" ng-click="EditPlaylist.Sunday = { 1: 0, 0:1 }[EditPlaylist.Sunday]" translate="">Sunday</span>
+                </div>
+              </div>
+              <div ng-show="Step == 5">
+              <center><h3>{{ MaxTime }}</h3></center>
+              <button class="btn btn-success" ng-click="SelectStep(6)" style="float:right; margin-top: -15px;" translate="">Next</button>
+              <br>
+              
+              
+              <hr>
+              <ul class="playlistContainer">
+                 <li class="theme-item" ng-repeat="SelectedTheme in SelectedThemes" lr-drag-src="PlaylistItemList" lr-drop-target="PlaylistItemList">  
+                    <img ng-src="{{SelectedTheme.Preview}}" data-cmsimageloader="" class="imageloading theme-preview" />
+                      <span class="theme-time">{{ secondsToTime(SelectedTheme.Time) }} 
+                      <span class="glyphicon glyphicon-plus" ng-click="AddTime(2)"></span>
+                      <span ng-click="RemoveTime(2)" class="glyphicon glyphicon-minus"></span>
+                      </span><br>
+                      <span class="theme-name"><span ng-click="RemoveTheme($index)" class="glyphicon glyphicon-trash" style="cursor: pointer;"></span> {{ SelectedTheme.Name }}</span>
+                 </li>
+             </ul>
+              
+              
+              
+              <hr>
+                  <script type="text/ng-template"  id="theme_folder_item_renderer.html">
+                     <span class="btn" ng-class="data.Selected" ng-click="SelectDir(data.ID)"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{data.Name}}</span>  
+                     
+                      <ul ng-show="data.Dirs">
+                          <li ng-repeat="data in data.Dirs" ng-include="'theme_folder_item_renderer.html'"></li>
+                      </ul>
+                  </script>
+
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-md-3">
+                           <ul>
+                            		<li>            
+                                   <span class="btn" ng-class="Dirs.Selected" ng-click="SelectDir(0)"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<span translate="">Home  Folder</span></span>
+                              			<ul>
+                                        <li ng-repeat="data in Dirs" ng-include="'theme_folder_item_renderer.html'"></li>
+                                    </ul>
+                               </li>
+                            </ul>
+                      </div>
+                      <div class="col-md-8">
+                             <input type="text" class="form-control" style="width: 400px;" placeholder="Search"  ng-model="Search.Value" ng-keyup="FilterThemes(Search.Start,'Name',Search.Value, Search.Limit)">
+                             <br>
+                              <table class="table table-striped">
+                              <thead>
+                                    <tr>
+                                      <th translate="">Preview</th>
+                                      <th translate="">Name</th>
+                                      <th translate="">Resolution</th>
+                                      <th translate="">Play time</th>
+                                      <th></th>
+                                    </tr>
+                              </thead>
+                              <tbody>
+                                <tr ng-repeat="Theme in Themes.Items">
+                                   <td><img  ng-click="LaunchEditor(Theme.ID)" ng-src="{{Theme.Preview}}" data-cmsimageloader="" class="imageloading" width="125">
+                                   </td>
+                                   <td style="vertical-align:center;">{{ Theme.Name }}</td>
+                                   <td style="vertical-align:center;">{{ Theme.Width }} X {{ Theme.Height }}</td>
+                                   <td style="vertical-align:center;">{{ secondsToTime(Theme.Time) }}</td>
+                                   <td style="vertical-align:center;"><button class="btn btn-primary" ng-click="AddTheme(Theme)" translate="">Select</button></td>
+                                </tr>
+                              </tbody>
+                              </table>
+                              <button type="button" ng-show="Themes.Items.length < Themes.Count" class="btn btn-primary btn-lg btn-block" ng-click="FilterThemes(Themes.Items.length,'Name',Search.Value, Search.Limit,true)" translate="">Load more results</button>
+                      </div>
+                    </div>
+                  </div>
+              
+              </div>
+              <div ng-show="Step == 6"> 
+              <br>
+              <h3 translate="">Playlist overview</h3>
+              <hr>
+              
+              <div class="panel panel-default" style="width:600px;">
+                <div class="panel-heading">
+                  <h3 class="panel-title" translate="">Overview</h3>
+                </div>
+                <div class="panel-body">
+                                <table class="table">
+                <tr><td style="width:200px;" translate="">Playlist name</td><td>{{ EditPlaylist.Name }}</td></tr>
+                <tr><td translate="">Publish</td><td>
+                 <span class="btn boolean" ng-click="EditPlaylist.Active=!EditPlaylist.Active" ng-model="EditPlaylist.Active">
+                      <span class="on btn-success" ng-show="EditPlaylist.Active"  translate="">YES</span>
+                      <span class="off btn-default" ng-hide="EditPlaylist.Active" translate="">NO</span>  
+                  </span>
+                </td></tr>
+                 <tr  ng-show="EditPlaylist.DateActive"><td translate="">Date From</td><td><div>{{ EditPlaylist.DateFrom | date:'yyyy-MM-dd' }}</div></td>
+</tr>
+                 <tr  ng-show="EditPlaylist.DateActive"><td translate="">Date To</td><td><div>{{ EditPlaylist.DateTo | date:'yyyy-MM-dd' }}</div></td>
+</tr>
+                 <tr  ng-show="EditPlaylist.TimeActive"><td translate="">Time From</td><td><div>{{ EditPlaylist.StartTime | date:'HH:mm' }}</div></td>
+</tr>
+                 <tr  ng-show="EditPlaylist.TimeActive"><td translate="">Time To</td><td><div>{{ EditPlaylist.EndTime | date:'HH:mm'}}</div></td>
+</tr>
+                 <tr ng-show="EditPlaylist.DayActive"><td translate="">Days Active</td><td>
+                   <div>
+                     <span class="btn btn-success btn-sm" ng-show="EditPlaylist.Monday"   translate="">Monday</span>
+                     <span class="btn btn-success btn-sm" ng-show="EditPlaylist.Tuesday"  translate="">Tuesday</span>
+                     <span class="btn btn-success btn-sm" ng-show="EditPlaylist.Wednesday"translate="">Wednesday</span>
+                     <span class="btn btn-success btn-sm" ng-show="EditPlaylist.Thursday" translate="">Thursday</span>
+                     <span class="btn btn-success btn-sm" ng-show="EditPlaylist.Friday"   translate="">Friday</span>
+                     <span class="btn btn-success btn-sm" ng-show="EditPlaylist.Saturday" translate="">Saturday</span>
+                     <span class="btn btn-success btn-sm" ng-show="EditPlaylist.Sunday"   translate="">Sunday</span>
+                   </div>
+                 </td></tr>
+              </table>
+                </div>
+              </div>
+              <button ng-hide="PlaylistSaveing" class="btn btn-success btn-lg" ng-click="SavePlaylist()" translate="">Save</button>
+              <button ng-show="PlaylistSaveing" class="btn btn-success btn-lg" translate="">Saving...</button>
+              
+              <button ng-click="BackToOverview()" class="btn btn-danger btn-lg" translate="">Cancel</button>
+              <br>
+              <br>
+              </div>
+           </div>
+      </div>
+</div>

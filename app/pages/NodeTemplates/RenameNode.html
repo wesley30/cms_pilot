@@ -1,0 +1,20 @@
+<div class="modal" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="$hide()">×</button>
+        <h4 class="modal-title" translate="">Rename Folder</h4>
+      </div>
+      <div class="modal-body">
+
+        <h4 translate="">What is the folder name?</h4><br>
+        <input type="text" autofocus="" ng-model="CurrentNodeInfo.Name" placeholder="Folder name" ng-enter="RenameNode()" >
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="$hide()" translate="">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="RenameNode()" translate="">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

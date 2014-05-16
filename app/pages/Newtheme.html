@@ -1,0 +1,37 @@
+<div class="modal" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="$hide()">×</button>
+        <h4 class="modal-title" translate="">New theme</h4>
+      </div>
+      <div class="modal-body">
+              <div ng-hide="NewThemeCreated">
+                  <h4 translate="">What is the name of your new theme?</h4><br>
+                  <input type="text"  ng-model="NewTheme.Name" placeholder="New theme name" autofocus="" ng-enter="CreateNewTheme()" />
+                  <hr>
+                  <h4 translate="">What resolution do you want the theme to be?</h4><br>
+                  
+                  <button type="button" class="btn btn-primary" data-animation="am-flip-x" bs-dropdown="NewThemeFolders">
+                  {{ NewTheme.Width }} x {{ NewTheme.Height }}
+                  </button>
+                  
+                  <div ng-show="UseCustomResolution">
+                  <br>
+                  <input type="number" ng-model="NewTheme.Width" /> x <input type="number" ng-model="NewTheme.Height" />
+                  </div>
+              </div>
+              
+              <div ng-show="NewThemeCreated">
+                      <h4 translate="">New theme "{{ NewThemeCreatedInfo.Name }}" created.</h4><br>
+                      <button ng-click="LaunchEditor(NewThemeCreatedInfo.CID)" class="btn btn-success" ><span class="glyphicon glyphicon-wrench"></span> <span translate="">Edit new theme</span></button>
+              </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" ng-click="$hide()" ng-show="NewThemeCreated" translate="">Done</button>
+        <button type="button" class="btn btn-default" ng-click="$hide()" ng-hide="NewThemeCreated" translate="">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="CreateNewTheme()" ng-hide="NewThemeCreated" translate="">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

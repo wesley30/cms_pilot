@@ -1,0 +1,79 @@
+<h1 translate="">Account</h1>
+<button class="btn btn-primary" ng-click="loadWallet()"><span class="glyphicon glyphicon-usd"></span> <span translate="">Wallet</span></button>
+<hr>
+
+  <div class="col-xs-7 col-md-4">
+            <div class="panel panel-default">
+            <div class="panel-heading" translate="">Account info</div>
+            <div class="panel-body">
+              <table class="table">
+                <tr><td translate="">AccountID</td><td>{{ Account.Info.UserName }}</td></tr>
+                <tr><td translate="">First Name</td><td><input type="text"     class="form-control" ng-model="Account.Info.FirstName" placeholder="First Name" /></td></tr>
+                <tr><td translate="">Last Name</td><td><input type="text"      class="form-control" ng-model="Account.Info.LastName"   placeholder="Last Name" /></td></tr>
+                <tr><td colspan="2"><hr></td></tr>
+                <tr><td translate="">Organization</td><td><input type="text" class="form-control" ng-model="Account.Info.OrganizationName" placeholder="Organization" /></td></tr>
+                <tr><td translate="">Phonenumber</td><td><input type="text"  class="form-control" ng-model="Account.Info.PhoneNumber" placeholder="Phonenumber" /></td></tr>
+                <tr><td colspan="2"><hr></td></tr>
+                <tr><td translate="">Lang</td><td><select ng-model="Account.Info.Lang" ng-options="option for option in Lang"></select></td></tr>
+                <tr><td translate="">Country</td><td><country-select data-ng-model="Account.Info.Country"></country-select></td></tr>
+                <tr><td translate="">State</td><td><input type="text"          class="form-control" ng-model="Account.Info.State" placeholder="State" /></td></tr>
+                <tr><td translate="">City</td><td><input type="text"           class="form-control" ng-model="Account.Info.City" placeholder="City" /></td></tr>
+                <tr><td translate="">Street Address</td><td><input type="text" class="form-control" ng-model="Account.Info.StreetAddress" placeholder="Street Address" /></td></tr>
+                <tr><td translate="">Zip</td><td><input type="text"            class="form-control" ng-model="Account.Info.Zip" placeholder="Zip" /></td></tr>
+              </table>
+              <button type="button" class="btn btn-primary" ng-click="SaveAccountInfo()" translate="">Save</button>
+            </div>
+          </div>
+  </div>
+  
+  <div class="col-xs-7 col-md-4">
+          <div class="panel panel-default">
+          <div class="panel-heading" translate="">Account Statistics</div>
+          <div class="panel-body">
+            <table class="table">
+              <tr><td translate="">Storage</td><td style="width:100%;" colspan="2">
+               
+              <div class="progress" style="height: 26px;">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{ Account.Stats.DiskSpace/(Account.Stats.DiskSpaceLimit/100) | number }}" aria-valuemin="0" aria-valuemax="100" style="color:#000000; width: {{ Account.Stats.DiskSpace/(Account.Stats.DiskSpaceLimit/100) | number }}%;">
+                 <span ng-show="(Account.Stats.DiskSpace/(Account.Stats.DiskSpaceLimit/100)) > 70"> {{ bytesToSize(Account.Stats.DiskSpace) }} of {{bytesToSize(Account.Stats.DiskSpaceLimit)}}</span>
+                </div>
+                <span ng-hide="(Account.Stats.DiskSpace/(Account.Stats.DiskSpaceLimit/100)) > 70"> {{ bytesToSize(Account.Stats.DiskSpace) }}  of {{bytesToSize(Account.Stats.DiskSpaceLimit)}}</span>
+              </div>
+              </td></tr>
+                <tr><td translate="">Apps</td><td>{{ Account.Stats.Apps }}                 </td><td><b translate="">Limit :</b> <span ng-show="Account.Stats.AppsLimit >= 0">{{ Account.Stats.AppsLimit }}</span><span  ng-hide="Account.Stats.AppsLimit >= 0" translate="">Unlimited</span></td></tr>
+                <tr><td translate="">Campaign</td><td>{{ Account.Stats.Campaign }}         </td><td><b translate="">Limit :</b> <span ng-show="Account.Stats.CampaignsLimit >= 0">{{ Account.Stats.CampaignsLimit }}</span><span  ng-hide="Account.Stats.CampaignsLimit >= 0" translate="">Unlimited</span></td></tr>
+                <tr><td translate="">ContentTree</td><td>{{ Account.Stats.ContentTree }}   </td><td><b translate="">Limit :</b> <span ng-show="Account.Stats.ContentTreeLimit >= 0">{{ Account.Stats.ContentTreeLimit }}</span><span  ng-hide="Account.Stats.ContentTreeLimit >= 0" translate="">Unlimited</span></td></tr>
+                <tr><td translate="">Devices</td><td>{{ Account.Stats.Devices }}           </td><td><b translate="">Limit :</b> <span ng-show="Account.Stats.DevicesLimit >= 0">{{ Account.Stats.DevicesLimit }}</span><span  ng-hide="Account.Stats.DevicesLimit >= 0" translate="">Unlimited</span></td></tr>
+                <tr><td translate="">Domains</td><td>{{ Account.Stats.Domains }}           </td><td><b translate="">Limit :</b> <span ng-show="Account.Stats.DomainsLimit >= 0">{{ Account.Stats.DomainsLimit }}</span><span  ng-hide="Account.Stats.DomainsLimit >= 0" translate="">Unlimited</span></td></tr>
+                <tr><td translate="">File Folders</td><td>{{ Account.Stats.FileFolders }}   </td><td><b translate="">Limit :</b> <span ng-show="Account.Stats.FileFoldersLimit >= 0">{{ Account.Stats.FileFoldersLimit }}</span><span  ng-hide="Account.Stats.FileFoldersLimit >= 0" translate="">Unlimited</span></td></tr>
+                <tr><td translate="">Files</td><td>{{ Account.Stats.Files }}               </td><td><b translate="">Limit :</b> <span ng-show="Account.Stats.FilesLimit >= 0">{{ Account.Stats.FilesLimit }}</span><span  ng-hide="Account.Stats.FilesLimit >= 0" translate="">Unlimited</span></td></tr>
+                <tr><td translate="">Groups</td><td>{{ Account.Stats.Groups }}             </td><td><b translate="">Limit :</b> <span ng-show="Account.Stats.GroupsLimit >= 0">{{ Account.Stats.GroupsLimit }}</span><span  ng-hide="Account.Stats.GroupsLimit >= 0" translate="">Unlimited</span></td></tr>
+                <tr><td translate="">Playlists</td><td>{{ Account.Stats.Playlists }}       </td><td><b translate="">Limit :</b> <span ng-show="Account.Stats.PlaylistsLimit >= 0">{{ Account.Stats.PlaylistsLimit }}</span><span  ng-hide="Account.Stats.PlaylistsLimit >= 0" translate="">Unlimited</span></td></tr>
+                <tr><td translate="">Subusers</td><td>{{ Account.Stats.SubUsers }}         </td><td><b translate="">Limit :</b> <span ng-show="Account.Stats.SubUsersLimit >= 0">{{ Account.Stats.SubUsersLimit }}</span><span  ng-hide="Account.Stats.SubUsersLimit >= 0" translate="">Unlimited</span></td></tr>
+                <tr><td translate="">ThemeFolders</td><td>{{ Account.Stats.ThemeFolders }} </td><td><b translate="">Limit :</b> <span ng-show="Account.Stats.ThemeFoldersLimit >= 0">{{ Account.Stats.ThemeFoldersLimit }}</span><span  ng-hide="Account.Stats.ThemeFoldersLimit >= 0" translate="">Unlimited</span></td></tr>
+                <tr><td translate="">Themes</td><td>{{ Account.Stats.Themes }}             </td><td><b translate="">Limit :</b> <span ng-show="Account.Stats.ThemesLimit >= 0">{{ Account.Stats.ThemesLimit }}</span><span  ng-hide="Account.Stats.ThemesLimit >= 0" translate="">Unlimited</span></td></tr>
+            </table>
+          </div>
+        </div>
+  </div>
+  
+  
+   <div class="col-xs-7 col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading" translate="">Reset password</div>
+            <div class="panel-body">
+              <table class="table">
+                <tr><td translate="">Old password</td>       <td><input ng-init="Account.Password.OldPassword=''"  type="password" class="form-control" ng-model="Account.Password.OldPassword"         placeholder="Old password" /></td></tr>
+                <tr><td translate="">New password</td>       <td><input ng-init="Account.Password.Newpassword1=''" type="password" class="form-control" ng-model="Account.Password.Newpassword1"        placeholder="New password" /></td></tr>
+                <tr><td translate="">Retype new password</td><td><input ng-init="Account.Password.Newpassword2=''"type="password" class="form-control" ng-model="Account.Password.Newpassword2"        placeholder="Retype password" /></td></tr>
+              </table>
+              <span translate="">Password requirements:</span> <br>
+                          <span translate="">-- Must contain 7 - 20 characters.</span><br>
+                          <span translate="">-- Must only contain a-z A-Z 0-9.</span><br>
+                          <span translate="">-- Must have at least one lowercase, one uppercase and one digit.</span><br>
+                          <hr>
+              <button type="button" class="btn btn-primary" ng-click="ChangePassword()" translate="">Change password</button>
+            </div>
+          </div>
+  </div>
+

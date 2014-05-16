@@ -1,0 +1,73 @@
+.playlistContainer{
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  margin: 0;
+  padding: 2px 0;
+  height: 200px;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+}
+
+.theme-item {
+  padding-right: 25px;
+  list-style: none;
+  position: relative;
+}
+
+
+.theme-preview {
+    border: 1px solid #e8e8e8;
+    padding: 2px;
+    background-color: white;
+    max-height:150px;
+    -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.05);
+    -moz-box-shadow: 1px 1px 1px rgba(0,0,0,.05);
+    box-shadow: 1px 1px 1px rgba(0,0,0,.05);
+    
+}
+
+
+.theme-time {
+  width: 125px;
+  padding: 3px 6px;
+  background: rgba(255,255,255,.95);
+  left:0px;
+  top:0px;
+  position: absolute;
+  border: 1px solid #E8E8E8;
+  -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.05);
+  -moz-box-shadow: 1px 1px 1px rgba(0,0,0,.05);
+  box-shadow: 1px 1px 1px rgba(0,0,0,.05);
+}
+
+.theme-name {
+  padding: 3px 8px;
+  background: rgba(255,255,255,.95);
+  position: absolute;
+  border: 1px solid #E8E8E8;
+  -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.05);
+  -moz-box-shadow: 1px 1px 1px rgba(0,0,0,.05);
+  box-shadow: 1px 1px 1px rgba(0,0,0,.05);
+}
+
+.lr-drop-target-after {
+    border-right: 2px solid blue;
+}
+
+.lr-drop-target-before {
+    //border-right: 2px solid orange;
+}
+
+.lr-drop-target-after:before, .lr-drop-target-before:before {
+    position: absolute;
+    content: '';
+    border: 5px solid transparent;
+    border-left-color: blue;
+    display: inline-block;
+}
+
+.GroupPlaylist td {
+  background-color: lightblue !important;
+}

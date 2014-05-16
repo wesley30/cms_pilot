@@ -1,0 +1,34 @@
+<div class="container">
+  <a class="btn btn-primary" href="#home" translate="">Back</a><br>
+  
+  
+  <div ng-hide="PendingDevice!=''">
+  <h3 translate="">New Device</h3>
+  <hr>
+  <b translate="">Device Name</b><br>
+  <input type="text" autofocus="" maxlength="100" placeholder="Device name" ng-model="NewDevice.Name" /><br><br>
+  <b translate="">Device registration key</b><br>
+  <table>
+  <tr>
+    <td><input ng-model="NewDevice.Key1" id="Key1" auto-tab-to="Key2" type="text" class="form-control" placeholder="BHD61" maxlength="4" style="width: 100px;text-transform: uppercase;height: 50px;font-size: 23px;" /></td><td> - </td>
+    <td><input ng-model="NewDevice.Key2" id="Key2" auto-tab-to="Key3" type="text" class="form-control" placeholder="BHD61" maxlength="4" style="width: 100px;text-transform: uppercase;height: 50px;font-size: 23px;" /></td><td> - </td>
+    <td><input ng-model="NewDevice.Key3" id="Key3" auto-tab-to="Key4" type="text" class="form-control" placeholder="BHD61" maxlength="4" style="width: 100px;text-transform: uppercase;height: 50px;font-size: 23px;" /></td><td> - </td>
+    <td><input ng-model="NewDevice.Key4" id="Key4" auto-tab-to="adddevicebutton" type="text" class="form-control" placeholder="BHD61" maxlength="4" style="width: 100px;text-transform: uppercase;height: 50px;font-size: 23px;" /></td>
+  </tr>
+  </table>
+  
+  <hr>
+  <button class="btn btn-success" id="adddevicebutton" style="float:right" ng-click="RegisterDevice(NewDevice.Name, NewDevice.Key1+'-'+NewDevice.Key2+'-'++NewDevice.Key3+'-'+NewDevice.Key4)" translate="">Register new device</button>
+   </div>
+   
+   <div ng-show="PendingDevice!=''">
+   <h3 translate="">Status</h3>
+   <hr>
+   <img src="images/loading.gif" ng-hide="PendingStatus == 2"> 
+   <span ng-show="PendingStatus == 0" translate="">Waiting for device to connect.</span> <span ng-show="StatusCounter >= 30 && PendingStatus == 0" translate="">(Please check the internet connection)</span>
+   <span ng-show="PendingStatus == 1" translate="">Device connected, device is downloading system data.</span>
+   <span ng-show="PendingStatus == 2" translate="">Device is ready to use.</span>
+   <hr>
+   <button ng-show="PendingDeviceInfo.Info.Status.InSync" class="btn btn-success" style="float:right" ng-click="NewDevicePage()" translate="">Register a other device</button>
+   </div>
+</div>

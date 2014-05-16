@@ -1,0 +1,37 @@
+<div class="modal" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="$hide()">×</button>
+        <h4 class="modal-title" translate="">Move Folder</h4>
+      </div>
+      <div class="modal-body">
+
+        <h4 translate="">Where do you want to move this folder to?</h4><br>
+            <script type="text/ng-template"  id="Folder_Move_renderer.html">
+               <span class="btn" ng-click="MoveFolder(data.ID)">
+               <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{data.Name}}
+               </span>  
+               
+                <ul ng-show="data.Dirs">
+                    <li ng-repeat="data in data.Dirs" ng-include="'Folder_Move_renderer.html'"></li>
+                </ul>
+          </script>
+    
+          <ul>
+          		<li>            
+               <span class="btn" ng-click="MoveFolder(0)">
+               <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<span translate="">Home Folder</span></span>
+          			<ul>
+                    <li ng-repeat="data in Dirs" ng-include="'Folder_Move_renderer.html'"></li>
+                </ul>
+             </li>
+          </ul>  
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="$hide()" translate="">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

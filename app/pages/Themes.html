@@ -1,0 +1,100 @@
+<script type="text/ng-template"  id="theme_folder_item_renderer.html">
+   <span class="btn" ng-class="data.Selected" ng-click="SelectDir(data.ID)">
+   <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{data.Name}}
+   <span ng-show="data.Selected" style="margin-left:30px;" class="glyphicon glyphicon-list" data-animation="am-flip-x" bs-dropdown="FolderMenu"></span>
+   </span>  
+   
+    <ul ng-show="data.Dirs">
+        <li ng-repeat="data in data.Dirs" ng-include="'theme_folder_item_renderer.html'"></li>
+    </ul>
+</script>
+
+<h1 translate="">Themes</h1>
+  <form class="navbar-form navbar-left" role="search" style="position: absolute; top: 69px; left: 137px;">
+    <div class="form-group">
+      <input type="text" class="form-control" autofocus="" style="width: 400px;" placeholder="{{'Search'|translate}}"  ng-model="Search.Value" ng-keyup="FilterThemes(Search.Start,'Name',Search.Value, Search.Limit)">
+    </div>
+  </form>
+<hr>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+         <ul>
+          		<li>            
+                 <span class="btn" ng-class="Dirs.Selected" ng-click="SelectDir(0)">
+                 <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<span translate="">Home  Folder</span>
+                 <span ng-show="Dirs.Selected" style="margin-left:30px;" class="glyphicon glyphicon-list" data-animation="am-flip-x" bs-dropdown="FolderMenuHome"></span></span>
+            			<ul>
+                      <li ng-repeat="data in Dirs" ng-include="'theme_folder_item_renderer.html'"></li>
+                  </ul>
+             </li>
+          </ul>
+    </div>
+    <div class="col-md-8">
+            <button class="btn btn-default" ng-hide="ThemesSelected" translate="">Move to folder</button>
+            <button class="btn btn-success" ng-show="ThemesSelected" ng-click="MoveMediaToFolderPopUp()" translate="">Move to folder</button>
+            <button style="float:right" class="btn btn-success" ng-click="NewThemePopUp()" translate="">Create new theme</button>
+            
+            <div ng-show="PendingImports.length > 0 && CurrentDir == 0">
+                <table class="table table-striped">
+                <thead>
+                      <tr>
+                        <th translate="">From</th>
+                        <th translate="">Theme name</th>
+                        <th></th>
+                      </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                  <tr ng-repeat="Import in PendingImports" class="TabMiddel">
+                     <td>{{Import.UserName}}</td>
+                     <td>{{Import.Name}}</td>
+                     <td>
+                         <button class="btn btn-success" ng-click="TriggerImport(Import.FromAccountID,Import.CID)" ng-show="Import.Importing == '0'" translate="">Accept</button>
+                         <img ng-src="images/loading.gif"   ng-show="Import.Importing == '1'">
+                         <button class="btn btn-warning" ng-click="RemoveImports(Import.FromAccountID,Import.CID)" ng-show="Import.Importing == '0'" translate="">Cancel</button>
+                     </td>
+                  </tr>
+                </table>
+            </div>
+            
+            <table class="table table-striped">
+            <thead>
+                  <tr>
+                    <th><input type="checkbox" ng-model="SelectSwitchBool" ng-change="SelectSwitch()" /></th>
+                    <th translate="">Preview</th>
+                    <th translate="">Name</th>
+                    <th translate="">Resolution</th>
+                    <th translate="">Play time</th>
+                    <th></th>
+                  </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="Theme in Themes.Items" ng-init="Theme.Rename=false" class="TabMiddel">
+                 <td><input type="checkbox" ng-model="Theme.Selected" ng-change="CheckSelection()" /></td>
+                 <td><img  ng-click="LaunchEditor(Theme.ID)" ng-src="{{Theme.Preview}}" data-cmsimageloader="" class="imageloading" width="125"></td>
+                 <td style="vertical-align:center;">
+                     <span class="glyphicon glyphicon-pencil" style="cursor: pointer;"  ng-click="Theme.Rename=!Theme.Rename"></span>
+                     <span ng-show="Theme.Rename">
+                     <input type="text" style="width: 100px;" ng-model="Theme.Name" />
+                     <button ng-click="RenameItem(Theme)" type="button" class="btn btn-default btn-sm" translate="">Save</button></span>
+                     <span ng-hide="Theme.Rename">{{ Theme.Name }}</span> 
+                 </td>
+                 <td style="vertical-align:center;">{{ Theme.Width }} X {{ Theme.Height }}</td>
+                 <td style="vertical-align:center;">{{ secondsToTime(Theme.Time) }} </td>
+                 <td style="vertical-align:center;">
+                 <button ng-click="SendThemePopUp(Theme.Name,Theme.ID)" class="btn btn-default" ><span class="glyphicon glyphicon-send"></span> <span translate="">Send to</span></button>
+                 <button ng-click="LaunchEditor(Theme.ID)" class="btn btn-primary" ><span class="glyphicon glyphicon-wrench"></span> <span translate="">Edit</span></button>
+                 <button class="btn btn-danger" ng-click="DeleteTheme(Theme.ID,Theme.Name,$index)"><span class="glyphicon glyphicon-trash"></span> <span translate="">Delete</span></button></td>
+                 <!--- DeleteTheme(Theme.ID,Theme.Name,$index) -->
+              </tr>
+            </tbody>
+            </table>
+            {{Themes.Items.length}}
+            {{Themes.Count}}
+            
+
+            <button type="button" ng-show="Themes.Items.length < Themes.Count" class="btn btn-primary btn-lg btn-block" ng-click="FilterThemes(Themes.Items.length,'Name',Search.Value, Search.Limit,true)" translate="">Load more results</button>
+    </div>
+  </div>
+</div>

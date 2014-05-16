@@ -1,0 +1,93 @@
+<script type="text/ng-template"  id="theme_folder_item_renderer.html">
+   <span class="btn" ng-class="data.Selected" ng-click="SelectDir(data.ID)">
+   <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{data.Name}}
+   <span ng-show="data.Selected" style="margin-left:30px;" class="glyphicon glyphicon-list" data-animation="am-flip-x" bs-dropdown="FolderMenu"></span>
+   </span>  
+   
+    <ul ng-show="data.Dirs">
+        <li ng-repeat="data in data.Dirs" ng-include="'theme_folder_item_renderer.html'"></li>
+    </ul>
+</script>
+
+<h1 translate="">Media</h1> <form class="navbar-form navbar-left" role="search" style="position: absolute; top: 69px; left: 137px;">
+    <div class="form-group">
+      <input type="text" class="form-control" style="width: 400px;" autofocus=""  ng-model="Search.Value" placeholder="{{'Search'|translate}}" ng-keyup="FilterFiles(Search.Start,'Name',Search.Value, Search.Limit)" /> 
+      <button class="btn btn-primary" data-animation="am-flip-x" bs-dropdown="SelectType">{{SelectTypeValue}}</button>
+    </div>
+  </form> 
+  
+<hr>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+         <ul>
+          		<li>            
+                 <span class="btn" ng-class="Dirs.Selected" ng-click="SelectDir(0)">
+                 <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<span translate="">Home Folder</span>
+                 <span ng-show="Dirs.Selected" style="margin-left:30px;" class="glyphicon glyphicon-list" data-animation="am-flip-x" bs-dropdown="FolderMenuHome"></span>
+                 </span>
+            			<ul>
+                      <li ng-repeat="data in Dirs" ng-include="'theme_folder_item_renderer.html'"></li>
+                  </ul>
+             </li>
+          </ul>
+    </div>
+    <div class="col-md-8">
+      <button class="btn btn-default" ng-hide="FilesSelected" translate="">Move to folder</button>
+      <button class="btn btn-success" ng-show="FilesSelected" ng-click="MoveMediaToFolderPopUp()" translate="">Move to folder</button>
+      
+      <button class="btn btn-danger" ng-show="FilesSelected" ng-click="DeleteMediaList()"><span ng-show="Removing" translate="">Removing...</span><span  ng-hide="Removing" translate="">Remove</span></button>
+
+      <button style="float:right" class="btn btn-success" ng-click="UploadPopUp()" translate="">Upload</button>
+
+      <table class="table table-striped">
+      <thead>
+            <tr>
+              <th><input type="checkbox" ng-model="SelectSwitchBool" ng-change="SelectSwitch()" /></th>
+              <th></th>
+              <th translate="">Name</th>
+              <th translate="">Type</th>
+              <th translate="">Size</th>
+              <th translate="">Width x Height</th>
+              <th translate="">Time</th>
+              <th translate="">Upload date</th>
+              <th></th>
+            </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="File in Files.Items" class="TabMiddel">
+           <td><input type="checkbox" ng-model="File.Selected" ng-change="CheckSelection()" /></td>
+           <td class="imageanimationcontaner"><img ng-hide="File.Type == 'FONT'" ng-src="{{File.Thumbnail}}" data-cmsimageloader="" class="imageloading"  width="125"></td>
+           <td>
+             <span ng-hide="File.Type == 'FONT'" class="glyphicon glyphicon-pencil" style="cursor: pointer;"  ng-click="File.Rename=!File.Rename"></span>
+             <span ng-show="File.Rename">
+             <input type="text" style="width: 100px;" ng-model="File.Name" />
+             <button ng-click="RenameItem(File)" type="button" class="btn btn-default btn-sm" translate="">Save</button></span>
+             <span ng-hide="File.Rename">{{ File.Name }}</span> 
+           </td>
+           <td>
+             <span ng-show="File.Type == 'IMG'" translate="">Image</span>
+             <span ng-show="File.Type == 'VIDEO'" translate="">Video</span>
+             <span ng-show="File.Type == 'SYSTEM'" translate="">System</span>
+             <span ng-show="File.Type == 'FONT'" translate="">Font</span>
+           </td>
+           <td>{{ bytesToSize(File.Size) }}</td>
+           <td><span ng-hide="File.Type == 'FONT'">{{ File.Width }} x {{ File.Height }}</span></td>
+           <td><span ng-show="File.Time > 0">{{ secondsToTime(File.Time) }} </span><span ng-hide="File.Time > 0">----</span></td>
+           <td>{{ File.TimeStamp }}</td>
+           <td>
+             <a ng-href="{{File.Download}}" target="_blank" class="btn btn-primary">Download</a>
+             <button class="btn btn-danger" ng-click="DeleteMedia(File.ID,File.Name,$index)" translate="">Delete</button>
+           </td>
+        </tr>
+      </tbody>
+      </table>
+      
+                 {{Files.Items.length}}
+            {{Files.Count}}
+      
+      <button type="button" ng-show="Files.Items.length < Files.Count" class="btn btn-primary btn-lg btn-block" ng-click="FilterFiles(Files.Items.length,'Name',Search.Value, Search.Limit,true)" translate="">Load more results</button>
+      
+  </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-4">
+    
+  </div>
+  <div class="col-md-4">
+    <div style="float: right; padding-right: 20px;">
+      <span style="cursor: pointer;" ng-click="SelectAll()" translate="">Select all</span> / <span style="cursor: pointer;" ng-click="DeselectAll()" translate="">Deselect all</span>
+    </div>
+  </div>
+</div>
+<hr>
+
+<table class="table table-striped">
+  <thead>
+        <tr>
+          <th></th>
+          <th translate="">Status</th>
+          <th translate="">Name</th>
+          <th translate="">Width x Height</th>
+          <th translate="">Up time</th>
+          <th translate="">Device time</th>
+        </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="Device in GlobalState.Devices" class="TabMiddel">
+       <td><button ng-class="{1:'btn-success', 0:'btn-default'}[Device.Selected]" class="btn btn-sm" ng-click="Select(Device)"><span ng-show="Device.Selected == 1" translate="">Deselect Device</span><span ng-hide="Device.Selected == 1" translate="">Select Device</span></button></td>
+       <td><img src="images/loading.gif" ng-hide="Device.Info.Status.InSync || GetStatus(Device.Time) == 'Offline'"> <span>{{ GetStatus(Device.Time) }}</span> <span ng-show="GetStatus(Device.Time) == 'Offline'">({{ OffLineFor(Device.Time) }})</span> <span ng-show="Device.Info.Status.Restarting" translate="">(Restarting)</span><span ng-show="Device.Info.Status.ClearingDate" translate="">(Clearing Data)</span></td>
+       <td>{{ Device.Name }}</td>
+       <td>{{ Device.Info.Info.Width }} x {{ Device.Info.Info.Height }}</td>
+       <td>{{ secondsToTime(Device.DeviceUpTime) }}</td>
+       <td>{{ Device.Info.Info.Time }}</td>
+       <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<button type="button" ng-show="GlobalState.Devices.length < MaxDevice" class="btn btn-primary btn-lg btn-block" ng-click="FilterDevices(GlobalState.Devices.length,'Name',GlobalState.SearchValue,Limit,true)">{{ MoreButton }}</button>

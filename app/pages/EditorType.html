@@ -1,0 +1,19 @@
+<div class="modal" tabindex="-1" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="$hide()">×</button>
+        <h4 class="modal-title" translate="">Editor</h4>
+      </div>
+      <div class="modal-body">
+      <h3 translate="">What editor do you want to use?</h3>
+      <button ng-click="DesignEditor(EditeTheme)" type="button" class="btn btn-default btn-lg btn-block"  translate="">Design Editor</button>
+      <button ng-click="ProductEditor(EditeTheme)" type="button" class="btn btn-default btn-lg btn-block" translate="">Product Editor</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="RefeshPage(); $hide()" translate="">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,12 @@
+<input type="text" class="form-control" placeholder="{{'Search'|translate}}" autofocus="" style="width: 400px; margin-left: 20px;" ng-model="GlobalState.SearchValue" ng-keyup="FilterDevices(0,'Name',GlobalState.SearchValue,Limit)" />
+    <br /><br />
+    <a ng-hide="PlaylistService.SelectedItems.length > 0" href="#/deviceview" style="margin-left: 20px;" class="btn btn-default" translate="">Edit Playlist</a>
+    <a ng-show="PlaylistService.SelectedItems.length > 0" href="#/playlist"   style="margin-left: 20px;" class="btn btn-success" translate="">Edit Playlist</a>
+    
+    <!-- <button style="float:right" ng-click="SelectView('tags')" ng-class="{'btn-success': GlobalState.DeviceView=='tags'}" class="glyphicon glyphicon-tags btn"></button><span style="float:right">&nbsp;</span> -->
+    <button style="float:right" ng-click="SelectView('tree')" ng-class="{'btn-success': GlobalState.DeviceView=='tree'}" class="glyphicon glyphicon-folder-close btn"></button><span style="float:right">&nbsp;</span>
+    <button style="float:right" ng-click="SelectView('devicelist')"       ng-class="{'btn-success': GlobalState.DeviceView=='devicelist'}" class="glyphicon glyphicon-th-list btn"></button><span style="float:right">&nbsp;</span>
+     <button style="float:right" ng-click="SelectView('deviceblok')"       ng-class="{'btn-success': GlobalState.DeviceView=='deviceblok'}" class="glyphicon glyphicon-th-large btn"></button> 
+
+
+<div ng-include="GlobalState.DeviceViewPage"></div>

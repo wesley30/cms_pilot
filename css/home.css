@@ -1,0 +1,110 @@
+.homeblok {
+  width: 250px;
+  height: 250px;
+  margin: 10px 5px;
+  position: relative;
+  cursor: pointer;
+  text-align: left;
+  display: inline-block;
+}
+
+#homeblok-holder a{
+  text-decoration: none;
+}
+
+#homeblok-holder a:hover{
+  opacity:0.8;
+}
+
+.hb-green {
+  background-color: #43ac6a;
+}
+
+.hb-yellow {
+  background-color: #E2BC0F;
+}
+
+.hb-blue {
+  background-color: #008cba;
+}
+
+.hb-orange {
+  background-color: #e99002;
+}
+
+.homeblok-text {
+  color: #fff;
+  font-size: 20px;
+  position: absolute;
+  padding-left: 10px;
+  bottom: 5px;
+  font-family: 'Segoe UI',Helvetica,Arial,Verdana,sans-serif;
+  text-shadow: 1px 1px 0 rgba(0,0,0,.4);
+}
+
+
+.tile-search {
+  background-image: url("../images/block-tiles.png");
+  background-position: 10px -9px;
+  width: 175px;
+  height: 175px;
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  top: 10px;
+}
+
+.tile-themeadmin {
+  background-image: url("../images/block-tiles.png");
+  background-position: -175px -9px;
+  width: 175px;
+  height: 175px;
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  top: 10px;
+}
+
+.tile-mediaadmin {
+  background-image: url("../images/block-tiles.png");
+  background-position: -355px -9px;
+  width: 175px;
+  height: 175px;
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  top: 10px;
+}
+
+.tile-settings {
+  background-image: url("../images/block-tiles.png");
+  background-position: -525px -2px;
+  width: 175px;
+  height: 175px;
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  top: 10px;
+}
+
+.tile-devices {
+  background-image: url("../images/block-tiles.png");
+  background-position: -171px 179px;
+  width: 175px;
+  height: 175px;
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  top: 10px;
+}
+
+.tile-user {
+  background-image: url("../images/block-tiles.png");
+  background-position: 13px 173px;
+  width: 175px;
+  height: 175px;
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  top: 10px;
+}

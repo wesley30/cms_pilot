@@ -1,0 +1,36 @@
+<script type="text/ng-template"  id="tree_item_renderer.html">
+   <input type="checkbox" ng-model="data.Selected" >  <span class="btn">{{data.Node.Name}}</span>  
+   
+    <ul ng-show="data.Nodes">
+        <li ng-repeat="data in data.Nodes" ng-include="'tree_item_renderer.html'"></li>
+    </ul>
+</script>
+<div ng-hide="Selected" >
+  <h2 translate="">Select Device or Group</h2>
+  <hr>
+  <button ng-click="GoToPlaylist()" style="float:right; margin-right:5px;" class="btn btn-primary btn-lg" translate="">Schedule playlist</button>
+  <br>
+  <br>
+  <br>
+  <div>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="tree">
+        <ul>
+        		<li>            
+                <input type="checkbox" ng-model="List.Selected"> <span class="btn" translate=""> Global</span>
+          			<ul>
+                    <li ng-repeat="data in List" ng-include="'tree_item_renderer.html'"></li>
+                </ul>
+           </li>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button ng-click="GoToPlaylist()" style="float:right; margin-right:5px;" class="btn btn-primary btn-lg" translate="">Schedule playlist</button>
+</div>
+
+<div ng-show="Selected" ng-controller="playlist" >
+   <div ng-include="'app/pages/Playlist.html'"></div>
+</div>

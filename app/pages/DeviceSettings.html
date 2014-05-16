@@ -1,0 +1,60 @@
+<div class="aside">
+  <div class="aside-dialog">
+      <div class="aside-content">
+        <div class="aside-header">
+          <button type="button" class="close" ng-click="$hide()">×</button>
+          <h4 class="aside-title" translate="">Device info</h4>
+        </div>
+        <div class="aside-body">
+           <div ng-hide="DeviceSettingsSaved">
+              <table class="table">
+                  <tr><td translate="">Name</td><td><input type="text" ng-model="DeviceInfo.Name" /></td></tr>
+                  <tr ng-hide="DeviceInfo.Info.Info.Device.toLowerCase().indexOf('webkit') != -1"><td translate="">Device</td><td>{{DeviceInfo.Info.Info.Device}}</td></tr>
+                  <tr ng-show="DeviceInfo.Info.Info.Device.toLowerCase().indexOf('webkit') != -1"><td translate="">Device</td><td>HTML-Client</td></tr>
+                  <tr ng-show="DeviceInfo.Info.Info.Device.toLowerCase().indexOf('webkit') != -1"><td translate="">Device info</td><td><input ng-model="DeviceInfo.Info.Info.Device" type="text" style="width:250px" /></td></tr>
+                  <tr><td translate="">Location</td><td>{{DeviceInfo.Info.Info.City}} ({{DeviceInfo.Info.Info.Country}})</td></tr>
+                  
+                  <tr ng-hide="DeviceInfo.Info.Info.Ethernet == 0"><td translate="">Ethernet</td><td><span ng-show="DeviceInfo.Info.Info.Ethernet" translate="">ON</span><span ng-hide="DeviceInfo.Info.Info.Ethernet" translate="">OFF</span></td></tr>
+                  
+                  <tr ng-hide="DeviceInfo.Info.Info.Ethernet && DeviceInfo.Info.Info.WIFI_SSID == 0"><td translate="">WiFi</td><td translate="">ON</td></tr>
+                  <tr ng-hide="DeviceInfo.Info.Info.Ethernet && DeviceInfo.Info.Info.WIFI_SSID == 0"><td translate="">WIFI_MBPS</td><td>{{DeviceInfo.Info.Info.WIFI_MBPS}}</td></tr>
+                  <tr ng-hide="DeviceInfo.Info.Info.Ethernet && DeviceInfo.Info.Info.WIFI_SSID == 0"><td translate="">WIFI_SSID</td><td>{{DeviceInfo.Info.Info.WIFI_SSID}}</td></tr>
+                  <tr ng-hide="DeviceInfo.Info.Info.Ethernet && DeviceInfo.Info.Info.WIFI_SSID == 0"><td translate="">WIFI_Strength</td><td>{{DeviceInfo.Info.Info.WIFI_Strength}}</td></tr>
+                  
+                  
+                  <tr ng-hide="DeviceInfo.Info.Info.IP == 0"><td translate="">IP Adress</td><td>{{DeviceInfo.Info.Info.IP}}</td></tr>
+                  <tr ng-hide="DeviceInfo.Info.Info.Netmask == 0"><td translate="">Netmask</td><td>{{DeviceInfo.Info.Info.Netmask}}</td></tr>
+                  <tr ng-hide="DeviceInfo.Info.Info.DNS == 0"><td translate="">DNS</td><td>{{DeviceInfo.Info.Info.DNS}}</td></tr>
+                  <tr ng-hide="DeviceInfo.Info.Info.Gateway == 0"><td translate="">Standard Gateway</td><td>{{DeviceInfo.Info.Info.Gateway}}</td></tr>
+                  
+                  <tr><td translate="">Width x Height</td><td>{{DeviceInfo.Info.Info.Width}} x {{DeviceInfo.Info.Info.Height}}</td></tr>
+                  <tr ng-hide="DeviceInfo.Info.Info.AppVersion == 0"><td translate="">App Version</td><td>{{DeviceInfo.Info.Info.AppVersion}}</td></tr>
+                  <tr ng-hide="DeviceInfo.Info.Info.AndroidFirmware == 0"><td translate="">Android Firmware</td><td>{{DeviceInfo.Info.Info.AndroidFirmware}}</td></tr>
+                  <tr ng-hide="DeviceInfo.Info.Info.Battery == 0"><td translate="">Battery</td><td>{{DeviceInfo.Info.Info.Battery}}</td></tr>
+              </table>
+              <hr>
+              <span ng-hide="DeviceInfo.Info.Info.Device.toLowerCase().indexOf('webkit') != -1">
+                <b translate="">What is the screen orientation?</b><br>
+                <button type="button" ng-click="DeviceInfo.Settings.Orientation=0" ng:class="{0:'btn-success', 1:'btn-default', 2:'btn-default', 3:'btn-default'}[DeviceInfo.Settings.Orientation]" class="btn btn-sm" translate="">Landscape</button>
+                <button type="button" ng-click="DeviceInfo.Settings.Orientation=1" ng:class="{0:'btn-default', 1:'btn-success', 2:'btn-default', 3:'btn-default'}[DeviceInfo.Settings.Orientation]" class="btn btn-default btn-sm" translate="">Portrait</button>
+                <button type="button" ng-click="DeviceInfo.Settings.Orientation=2" ng:class="{0:'btn-default', 1:'btn-default', 2:'btn-success', 3:'btn-default'}[DeviceInfo.Settings.Orientation]" class="btn btn-default btn-sm" translate="">Reversed Landscape</button>
+                <button type="button" ng-click="DeviceInfo.Settings.Orientation=3" ng:class="{0:'btn-default', 1:'btn-default', 2:'btn-default', 3:'btn-success'}[DeviceInfo.Settings.Orientation]" class="btn btn-default btn-sm" translate="">Reversed Portrait</button>
+                <hr>
+                <b translate="">Do you want to show the progress icon?</b><br>
+                <span class="btn boolean" ng-click="DeviceInfo.Settings.IconControl = { 1: 0, 0:1,2:0,3:0 }[DeviceInfo.Settings.IconControl]">
+                        <span class="on btn-success"  ng-show="DeviceInfo.Settings.IconControl==1" translate="">YES</span>
+                        <span class="off btn-default" ng-show="DeviceInfo.Settings.IconControl!=1" translate="">NO</span>  
+                </span>
+              </span>
+            </div>
+            <div ng-show="DeviceSettingsSaved">
+            <h3 translate="">Settings saved.</h3>
+            </div>
+        </div>
+        <div class="aside-footer">
+          <button ng-hide="DeviceSettingsSaved" type="button" class="btn btn-success" ng-click="SaveDeviceSettings(DeviceInfo)" translate="">Save</button>
+          <button type="button" class="btn btn-default" ng-click="$hide()" translate="">Close</button> 
+          </div>
+      </div> 
+  </div>
+</div>

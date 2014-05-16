@@ -1,0 +1,113 @@
+<h1 translate="">Devices</h1>
+<hr>
+<div class="container-fluid" ng-hide="NewDeviceView">
+  <div class="row">
+    <div class="col-md-4">
+          <script type="text/ng-template"  id="ContentTree_renderer.html">
+             <span class="btn" ng-class="data.Node.Selected" ng-click="SelectContentTree(data.Node.ID)">
+             <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{data.Node.Name}}
+             <span ng-show="data.Node.Selected" style="margin-left:30px;" class="glyphicon glyphicon-list" data-animation="am-flip-x" bs-dropdown="FolderMenu"></span>
+             </span>  
+             
+              <ul ng-show="data.Nodes">
+                  <li ng-repeat="data in data.Nodes" ng-include="'ContentTree_renderer.html'"></li>
+              </ul>
+          </script>
+      
+            <ul>
+            		<li>            
+                 <span class="btn" ng-class="GlobalState.ContentTreeList.Selected" ng-click="SelectContentTree(0)">
+                 <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<span translate="">Home Folder</span>
+                 <span ng-show="GlobalState.ContentTreeList.Selected" style="margin-left:30px;" class="glyphicon glyphicon-list" data-animation="am-flip-x" bs-dropdown="FolderMenuHome"></span></span>
+            			<ul>
+                      <li ng-repeat="data in GlobalState.ContentTreeList" ng-include="'ContentTree_renderer.html'"></li>
+                  </ul>
+             </li>
+            </ul>  
+    </div>
+    <div class="col-md-8">
+            <input type="text" class="form-control"  autofocus="" ng-model="GlobalState.SearchValueDevices" style="width: 150px;" placeholder="{{'Search'|translate}}" ng-keyup="FilterDevices(Search.Start,'Name',GlobalState.SearchValueDevices, Search.Limit)" />
+      
+            <button class="btn btn-success" style="float:right" ng-click="NewDevicePage()" translate="">New device</button>
+            <span style="float:right">&nbsp;&nbsp;&nbsp;</span>
+            
+            <span style="float:right" class="btn btn-default" ng-hide="DeviceSelected" translate="">Reboot</span>
+            <span style="float:right" ng-hide="DeviceSelected">&nbsp;</span>
+            <span style="float:right" class="btn btn-default" ng-hide="DeviceSelected" translate="">Reset device data</span>
+            <span style="float:right" ng-hide="DeviceSelected">&nbsp;</span>
+            <span style="float:right" class="btn btn-default" ng-hide="DeviceSelected" translate="">Move to folder</span>
+            
+            <span style="float:right" class="btn btn-warning" ng-show="DeviceSelected" ng-click="Reboot()" translate="">Reboot</span>
+            <span style="float:right" ng-show="DeviceSelected">&nbsp;</span>
+            <span style="float:right" class="btn btn-warning" ng-show="DeviceSelected" ng-click="Reset()" translate="">Reset device data</span>
+            <span style="float:right" ng-show="DeviceSelected">&nbsp;</span>
+            <span style="float:right" class="btn btn-success" ng-show="DeviceSelected" ng-click="MoveDevicePopUp()" translate="">Move to folder</span>
+            
+            <table class="table table-striped">
+            <thead>
+                  <tr>
+                    <th><input type="checkbox" ng-model="SelectSwitchBool" ng-change="SelectSwitch()"></th>
+                    <th translate="">Status</th>
+                    <th translate="">Name</th>
+                    <th translate="">Width x Height</th>
+                    <th translate="">Up time</th>
+                    <th translate="">Device time</th>
+                  </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="Device in Devices.Items" class="TabMiddel">
+                 <td><input ng-model="Device.Selected" ng-change="CheckSelection()" type="checkbox"></td>
+                 <td><span ng-hide="GetStatus(Device.Time) == 'Offline'"><img src="images/loading.gif" ng-hide="Device.Info.Status.InSync"></span> {{ GetStatus(Device.Time) }} <span ng-show="GetStatus(Device.Time) == 'Offline'">({{ OffLineFor(Device.Time) }})</span> <span ng-show="Device.Info.Status.Restarting" translate="">(Restarting)</span><span ng-show="Device.Info.Status.ClearingDate" translate="">(Clearing Data)</span></td>
+                 <td>{{ Device.Name }}</td>
+                 <td>{{ Device.Info.Info.Width }} x {{ Device.Info.Info.Height }}</td>
+                 <td>{{ secondsToTime(Device.DeviceUpTime) }}</td>
+                 <td>{{ Device.Info.Info.Time }}</td>
+                 <td><button class="btn tn-primary glyphicon glyphicon glyphicon-wrench" ng-click="ShowDeviceSettings(Device)" ></button> <button class="btn btn-danger glyphicon glyphicon-trash" ng-click="RemoveDevice(Device.ID,Device.Name,$index)" ></button></td>
+              </tr>
+            </tbody>
+            </table>
+            
+            {{Devices.Items.length}}
+            {{Devices.Count}}
+            <button type="button" ng-show="Devices.Items.length < Devices.Count" class="btn btn-primary btn-lg btn-block" ng-click="FilterDevices(Devices.Items.length,'Name',GlobalState.SearchValueDevices, Search.Limit,true)" translate="">Load more results</button>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="container" ng-show="NewDeviceView">
+  <button class="btn btn-primary" ng-click="PageBack()" translate="">Back</button><br>
+  
+  
+  <div ng-hide="PendingDevice!=''">
+  <h3 translate="">New Device</h3>
+  <hr>
+  <b translate="">Device Name</b><br>
+  <input type="text" autofocus="" maxlength="100" placeholder="Device name" ng-model="NewDevice.Name" /><br><br>
+  <b translate="">Device registration key</b><br>
+  <table>
+  <tr>
+    <td><input ng-model="NewDevice.Key1" id="Key1" auto-tab-to="Key2" type="text" class="form-control" placeholder="BHD61" maxlength="4" style="width: 100px;text-transform: uppercase;height: 50px;font-size: 23px;" /></td><td> - </td>
+    <td><input ng-model="NewDevice.Key2" id="Key2" auto-tab-to="Key3" type="text" class="form-control" placeholder="BHD61" maxlength="4" style="width: 100px;text-transform: uppercase;height: 50px;font-size: 23px;" /></td><td> - </td>
+    <td><input ng-model="NewDevice.Key3" id="Key3" auto-tab-to="Key4" type="text" class="form-control" placeholder="BHD61" maxlength="4" style="width: 100px;text-transform: uppercase;height: 50px;font-size: 23px;" /></td><td> - </td>
+    <td><input ng-model="NewDevice.Key4" id="Key4" auto-tab-to="adddevicebutton" type="text" class="form-control" placeholder="BHD61" maxlength="4" style="width: 100px;text-transform: uppercase;height: 50px;font-size: 23px;" /></td>
+  </tr>
+  </table>
+  
+  <hr>
+  <button class="btn btn-success" id="adddevicebutton" style="float:right" ng-click="RegisterDevice(NewDevice.Name, NewDevice.Key1+'-'+NewDevice.Key2+'-'++NewDevice.Key3+'-'+NewDevice.Key4)" translate="">Register new device</button>
+   </div>
+   
+   <div ng-show="PendingDevice!=''">
+   <h3 translate="">Status</h3>
+   <hr>
+   <img src="images/loading.gif" ng-hide="PendingStatus == 2"> 
+   <span ng-show="PendingStatus == 0" translate="">Waiting for device to connect.</span> <span ng-show="StatusCounter >= 30 && PendingStatus == 0" translate="">(Please check the internet connection)</span>
+   <span ng-show="PendingStatus == 1" translate="">Device connected, device is downloading system data.</span>
+   <span ng-show="PendingStatus == 2" translate="">Device is ready to use.</span>
+   
+   <hr>
+   <button ng-show="PendingStatus == 2" class="btn btn-success" style="float:right" ng-click="NewDevicePage()" translate="">Register a other device</button>
+   </div>
+</div>

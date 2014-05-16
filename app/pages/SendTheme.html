@@ -1,0 +1,26 @@
+<div class="modal" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="$hide()">×</button>
+        <h4 class="modal-title" translate="">Send theme</h4>
+      </div>
+      <div class="modal-body">
+          <div ng-hide="SendThemeInfo.Sent">
+             <h4 translate="">To who do you want to send the theme "{{SendThemeInfo.Name}}"?</h4><br>
+             
+             <input type="text" autofocus="" placeholder="Account email" ng-model="SendThemeInfo.UserName" style="width:300px" />  
+          </div> 
+          
+          <div ng-show="SendThemeInfo.Sent">
+          <h4 translate="">The theme "{{SendThemeInfo.Name}}" is sent to {{SendThemeInfo.UserName}}</h4>
+          </div>     
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="$hide()" ng-show="SendThemeInfo.Sent" translate="">Close</button>
+        <button type="button" class="btn btn-default" ng-click="$hide()" ng-hide="SendThemeInfo.Sent" translate="">Cancel</button>
+        <button type="button" class="btn btn-success" ng-hide="SendThemeInfo.Sent" ng-click="SendTheme(SendThemeInfo.UserName,SendThemeInfo.ID)" translate="">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
