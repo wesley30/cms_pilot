@@ -4,30 +4,29 @@
 <!-- Menu Conten -->
 <div class="row">
     <a class="btn btn-default btn-lg btn-block col-md-4 " ng-hide="gettextCatalog_.currentLanguage == 'nl'" href="#/deviceview" type="button">
-        <div class="col-md-offset-5 pull-left"><span  class="glyphicon glyphicon-calendar"></span> <span translate="">Plan your content</span></div>
+        <div class="text-left col-lg-offset-5"><span class="glyphicon glyphicon-calendar"></span> <span translate=""> Plan your content</span></div>
     </a>
     <a class="btn btn-default btn-lg btn-block col-md-4" ng-show="gettextCatalog_.currentLanguage == 'nl'" href="#/deviceview" type="button">
-        <div class="col-md-offset-5 pull-left"><span class="glyphicon glyphicon-calendar"></span> <span translate="">Plan your content</span></div>
+        <div class="text-left col-lg-offset-5"><span class="glyphicon glyphicon-calendar"></span> <span translate=""> Plan your content</span></div>
     </a>
     <a class="btn btn-default btn-lg btn-block col-md-4" href="#/themes" type="button">
-        <div class="col-md-offset-5 pull-left"><span class="glyphicon glyphicon-picture"> </span> <span translate="">Theme Library</span></div>
+        <div class="text-left col-lg-offset-5"><span class="glyphicon glyphicon-picture"> </span> <span translate=""> Theme Library</span></div>
     </a>
     <a class="btn btn-default btn-lg btn-block col-md-4" href="#/files" type="button">
-        <div class="col-md-offset-5 pull-left"><span class="glyphicon glyphicon-film"></span> <span translate="">Media Library</span></div>
+        <div class="text-left col-lg-offset-5"><span class="glyphicon glyphicon-film"></span> <span translate=""> Media Library</span></div>
     </a>
     <a class="btn btn-default btn-lg btn-block col-md-4" href="#/devices" type="button">
-        <div class="col-md-offset-5 pull-left"><span class="glyphicon glyphicon-hdd"></span> <span translate="">My Devices</span></div>
+        <div class="text-left col-lg-offset-5"><span class="glyphicon glyphicon-hdd"></span> <span translate=""> My Devices</span></div>
     </a>
     <a class="btn btn-default btn-lg btn-block col-md-4" href="#/account" type="button">
-        <div class="col-md-offset-5 pull-left"><span class="glyphicon glyphicon-cog"></span> <span translate="">Account Settings</span></div>
+        <div class="text-left col-lg-offset-5"><span class="glyphicon glyphicon-cog"></span> <span translate=""> Account Settings</span></div>
     </a>
     <a class="btn btn-default btn-lg btn-block col-md-4" ng-href="{{AccountInfo.SupportURL}}" ng-show="AccountInfo.SupportURL" target="_blank" type="button">
-        <div class="col-md-offset-5 pull-left"><span class="glyphicon glyphicon-question-sign"></span> <span translate="">Support</span></div>
+        <div class="text-left col-lg-offset-5"><span class="glyphicon glyphicon-question-sign"></span> <span translate=""> Support</span></div>
     </a>
 </div>
 <!-- Menu Conten -->  
   <br>
-
   <button ng-show="gettextCatalog_.debug" ng-click="GetLangObject()"  type="button"  class="btn btn-default btn-lg btn-block"><div><span style="margin-left: -16px;" class="glyphicon glyphicon-cog">     </span> Get lang</div></button>
   <textarea ng-show="LoadTransLate" ng-model="LoadTransLateData"></textarea>
 </div>

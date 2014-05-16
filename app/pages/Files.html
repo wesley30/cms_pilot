@@ -9,30 +9,35 @@
     </ul>
 </script>
 
-<h1 translate="">Media</h1> <form class="navbar-form navbar-left" role="search" style="position: absolute; top: 69px; left: 137px;">
-    <div class="form-group">
-      <input type="text" class="form-control" style="width: 400px;" autofocus=""  ng-model="Search.Value" placeholder="{{'Search'|translate}}" ng-keyup="FilterFiles(Search.Start,'Name',Search.Value, Search.Limit)" /> 
-      <button class="btn btn-primary" data-animation="am-flip-x" bs-dropdown="SelectType">{{SelectTypeValue}}</button>
-    </div>
-  </form> 
+<div class="container-fluid">
+    
+<h1 translate="">Files</h1> 
   
 <hr>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-4">
-         <ul>
-          		<li>            
-                 <span class="btn" ng-class="Dirs.Selected" ng-click="SelectDir(0)">
-                 <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<span translate="">Home Folder</span>
-                 <span ng-show="Dirs.Selected" style="margin-left:30px;" class="glyphicon glyphicon-list" data-animation="am-flip-x" bs-dropdown="FolderMenuHome"></span>
-                 </span>
-            			<ul>
-                      <li ng-repeat="data in Dirs" ng-include="'theme_folder_item_renderer.html'"></li>
-                  </ul>
-             </li>
-          </ul>
-    </div>
-    <div class="col-md-8">
+
+    <div class="row">
+        <div class="col-md-12">
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" style="width: 400px;" autofocus=""  ng-model="Search.Value" placeholder="{{'Search'|translate}}" ng-keyup="FilterFiles(Search.Start,'Name',Search.Value, Search.Limit)" /> 
+                    <button class="btn btn-primary" data-animation="am-flip-x" bs-dropdown="SelectType">{{SelectTypeValue}}</button>
+                </div>
+            </form> 
+        </div>
+        <div class="col-md-4">
+             <ul>
+                            <li>            
+                     <span class="btn" ng-class="Dirs.Selected" ng-click="SelectDir(0)">
+                     <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<span translate="">Home Folder</span>
+                     <span ng-show="Dirs.Selected" style="margin-left:30px;" class="glyphicon glyphicon-list" data-animation="am-flip-x" bs-dropdown="FolderMenuHome"></span>
+                     </span>
+                                    <ul>
+                          <li ng-repeat="data in Dirs" ng-include="'theme_folder_item_renderer.html'"></li>
+                      </ul>
+                 </li>
+              </ul>
+        </div>
+<div class="col-md-8">
       <button class="btn btn-default" ng-hide="FilesSelected" translate="">Move to folder</button>
       <button class="btn btn-success" ng-show="FilesSelected" ng-click="MoveMediaToFolderPopUp()" translate="">Move to folder</button>
       
@@ -82,12 +87,9 @@
         </tr>
       </tbody>
       </table>
-      
-                 {{Files.Items.length}}
-            {{Files.Count}}
-      
+           
       <button type="button" ng-show="Files.Items.length < Files.Count" class="btn btn-primary btn-lg btn-block" ng-click="FilterFiles(Files.Items.length,'Name',Search.Value, Search.Limit,true)" translate="">Load more results</button>
       
-  </div>
+</div>
   </div>
 </div>
